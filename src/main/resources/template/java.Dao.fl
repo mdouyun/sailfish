@@ -1,0 +1,44 @@
+package org.thorn.sailfish.dao;
+
+import org.thorn.sailfish.entity.${nameFirLetterUc};
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+/**
+ * @Author: yfchenyun
+ * @Since: ${.now}
+ * @Version: 1.0
+ */
+@Service
+public class ${nameFirLetterUc}Dao {
+
+    private static final String NAMESPACE = "${nameFirLetterUc}Mapper.";
+
+    @Autowired
+    private SqlSessionTemplate sqlSessionTemplate;
+
+    public int save(${nameFirLetterUc} ${name}) {
+        return sqlSessionTemplate.insert(NAMESPACE + "insert", ${name});
+    }
+
+    public int modify(${nameFirLetterUc} ${name}) {
+        return sqlSessionTemplate.insert(NAMESPACE + "update", ${name});
+    }
+
+    public int delete(List<String> ids) {
+        return sqlSessionTemplate.delete(NAMESPACE + "delete", ids);
+    }
+
+    public long count(Map<String, Object> filter) {
+        return (Long) sqlSessionTemplate.selectOne(NAMESPACE + "count", filter);
+    }
+
+    public List<${nameFirLetterUc}> query(Map<String, Object> filter) {
+        return sqlSessionTemplate.selectList(NAMESPACE + "select", filter);
+    }
+
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+	 <!--excludes 用于不使用装饰器
+	 <excludes>          
+        <pattern>/am/rs/uploadFile*</pattern>
+    </excludes>
+     -->
+	<decorators>
+		<decorator name="main" page="/WEB-INF/jsp/sitemesh/admin.jsp">
+          <pattern>/am/*</pattern>
+      	</decorator>
+      	<!-- 
+      	<decorator name="reference" page="/WEB-INF/jsps/core/reference.jsp">
+          <pattern>*.jsp</pattern>
+      	</decorator>
+      	 -->
+	</decorators>
+</sitemesh>

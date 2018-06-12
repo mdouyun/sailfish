@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserMapper">
+
+    <resultMap id="UserMap" type="org.thorn.sailfish.entity.User">
+        <id column="USERID" property="userId" jdbcType="VARCHAR" javaType="String"/>
+        <result column="USERNAME" property="userName" jdbcType="VARCHAR" javaType="String"/>
+        <result column="PASSWORD" property="password" jdbcType="VARCHAR" javaType="String"/>
+        <result column="DEFAULTROLE" property="defaultRole" jdbcType="VARCHAR" javaType="String"/>
+        <result column="AVAILABLE" property="available" jdbcType="INTEGER" javaType="Integer"/>
+        <result column="MODIFYTIME" property="modifyTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="LASTLOGINTIME" property="lastLoginTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+    </resultMap>
+
+    <sql id="Column">
+            USERID,
+            USERNAME,
+            PASSWORD,
+            DEFAULTROLE,
+            AVAILABLE,
+            MODIFYTIME,
+            LASTLOGINTIME
+	</sql>
+
+	<sql id="Where_Clause">
+		<where>
+            <if test="userId != null and userId != ''">
+                and t.USERID = #{userId,jdbcType=VARCHAR}
+            </if>
+            <if test="userName != null and userName != ''">
+                and t.USERNAME like concact('%', #{userName,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="password != null and password != ''">
+                and t.PASSWORD = md5(#{password,jdbcType=VARCHAR})
+            </if>
+            <if test="defaultRole != null and defaultRole != ''">
+                and t.DEFAULTROLE = #{defaultRole,jdbcType=VARCHAR}
+            </if>
+            <if test="available != null">
+                and t.AVAILABLE = #{available,jdbcType=INTEGER}
+            </if>
+            <if test="modifyTime != null">
+                and t.MODIFYTIME = #{modifyTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="lastLoginTime != null">
+                and t.LASTLOGINTIME = #{lastLoginTime,jdbcType=TIMESTAMP}
+            </if>
+		</where>
+	</sql>
+
+    <insert id="insert" parameterType="org.thorn.sailfish.entity.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null and userId != ''">USERID,</if>
+            <if test="userName != null and userName != ''">USERNAME,</if>
+            <if test="password != null and password != ''">PASSWORD,</if>
+            <if test="defaultRole != null and defaultRole != ''">DEFAULTROLE,</if>
+            <if test="available != null">AVAILABLE,</if>
+            <if test="modifyTime != null">MODIFYTIME,</if>
+            <if test="lastLoginTime != null">LASTLOGINTIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null and userId != ''">#{userId,jdbcType=VARCHAR},</if>
+            <if test="userName != null and userName != ''">#{userName,jdbcType=VARCHAR},</if>
+            <if test="password != null and password != ''">md5(#{password,jdbcType=VARCHAR}),</if>
+            <if test="defaultRole != null and defaultRole != ''">#{defaultRole,jdbcType=VARCHAR},</if>
+            <if test="available != null">#{available,jdbcType=INTEGER},</if>
+            <if test="modifyTime != null">#{modifyTime,jdbcType=TIMESTAMP},</if>
+            <if test="lastLoginTime != null">#{lastLoginTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="org.thorn.sailfish.entity.User">
+        update user
+        <set>
+            <if test="userName != null and userName != ''">USERNAME = #{userName,jdbcType=VARCHAR},</if>
+            <if test="password != null and password != ''">PASSWORD = #{password,jdbcType=VARCHAR},</if>
+            <if test="defaultRole != null and defaultRole != ''">DEFAULTROLE = #{defaultRole,jdbcType=VARCHAR},</if>
+            <if test="available != null">AVAILABLE = #{available,jdbcType=INTEGER},</if>
+            <if test="modifyTime != null">MODIFYTIME = #{modifyTime,jdbcType=TIMESTAMP},</if>
+            <if test="lastLoginTime != null">LASTLOGINTIME = #{lastLoginTime,jdbcType=TIMESTAMP},</if>
+        </set>
+        where <include refid="Where_Clause" />
+    </update>
+
+    <delete id="delete">
+        delete from user where
+                userId in <foreach collection="list" item="item" open="(" close=")" separator=",">
+                            #{item,jdbcType=VARCHAR}
+                           </foreach>
+    </delete>
+
+	<select id="select" resultMap="UserMap" parameterType="hashmap">
+		<include refid="MySQLCommonMapper.pagingStart" />
+		select
+		<include refid="Column" />
+		from user t
+		<include refid="Where_Clause" />
+		<include refid="MySQLCommonMapper.sortInfo" />
+		<include refid="MySQLCommonMapper.pagingEnd" />
+	</select>
+
+	<select id="count" parameterType="hashmap" resultType="long">
+		select count(*) from user t
+		<include refid="Where_Clause" />
+	</select>
+
+</mapper>

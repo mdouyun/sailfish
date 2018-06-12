@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ArticleMapper">
+
+    <resultMap id="ArticleMap" type="org.thorn.sailfish.entity.Article">
+        <id column="ID" property="id" jdbcType="INTEGER" javaType="Integer"/>
+        <result column="CATEGORY" property="category" jdbcType="VARCHAR" javaType="String"/>
+        <result column="TITLE" property="title" jdbcType="VARCHAR" javaType="String"/>
+        <result column="CONTENT" property="content" jdbcType="VARCHAR" javaType="String"/>
+        <result column="CREATETIME" property="createTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="MODIFYTIME" property="modifyTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="STATUS" property="status" jdbcType="INTEGER" javaType="Integer"/>
+        <result column="CREATER" property="creater" jdbcType="VARCHAR" javaType="String"/>
+        <result column="STARLEVEL" property="starLevel" jdbcType="INTEGER" javaType="Integer"/>
+    </resultMap>
+
+    <sql id="Column">
+            ID,
+            CATEGORY,
+            TITLE,
+            CREATETIME,
+            MODIFYTIME,
+            STATUS,
+            CREATER,
+            STARLEVEL
+	</sql>
+
+	<sql id="Where_Clause">
+		<where>
+            <if test="id != null">
+                and t.ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="category != null and category != ''">
+                and t.CATEGORY = #{category,jdbcType=VARCHAR}
+            </if>
+            <if test="title != null and title != ''">
+                and t.TITLE like concact('%',#{title,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="startTime != null">
+                and t.MODIFYTIME &gt;= #{startTime,jdbcType=TIMESTAMP,javaType=java.util.Date}
+            </if>
+            <if test="endTime != null">
+                and t.MODIFYTIME &lt;= #{endTime,jdbcType=TIMESTAMP,javaType=java.util.Date}
+            </if>
+            <if test="status != null">
+                and t.STATUS = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="notStatus != null">
+                and t.STATUS &lt;&gt; #{notStatus,jdbcType=INTEGER}
+            </if>
+            <if test="creater != null and creater != ''">
+                and t.CREATER = #{creater,jdbcType=VARCHAR}
+            </if>
+            <if test="starLevel != null">
+                and t.STARLEVEL = #{starLevel,jdbcType=INTEGER}
+            </if>
+		</where>
+	</sql>
+
+    <insert id="insert" parameterType="org.thorn.sailfish.entity.Article"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">ID,</if>
+            <if test="category != null and category != ''">CATEGORY,</if>
+            <if test="title != null and title != ''">TITLE,</if>
+            <if test="content != null and content != ''">CONTENT,</if>
+            <if test="createTime != null">CREATETIME,</if>
+            <if test="modifyTime != null">MODIFYTIME,</if>
+            <if test="status != null">STATUS,</if>
+            <if test="creater != null and creater != ''">CREATER,</if>
+            <if test="starLevel != null">STARLEVEL,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=INTEGER},</if>
+            <if test="category != null and category != ''">#{category,jdbcType=VARCHAR},</if>
+            <if test="title != null and title != ''">#{title,jdbcType=VARCHAR},</if>
+            <if test="content != null and content != ''">#{content,jdbcType=VARCHAR},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP,javaType=java.util.Date},</if>
+            <if test="modifyTime != null">#{modifyTime,jdbcType=TIMESTAMP,javaType=java.util.Date},</if>
+            <if test="status != null">#{status,jdbcType=INTEGER},</if>
+            <if test="creater != null and creater != ''">#{creater,jdbcType=VARCHAR},</if>
+            <if test="starLevel != null">#{starLevel,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="org.thorn.sailfish.entity.Article">
+        update article
+        <set>
+            <if test="category != null and category != ''">CATEGORY = #{category,jdbcType=VARCHAR},</if>
+            <if test="title != null and title != ''">TITLE = #{title,jdbcType=VARCHAR},</if>
+            <if test="content != null and content != ''">CONTENT = #{content,jdbcType=VARCHAR},</if>
+            <if test="createTime != null">CREATETIME = #{createTime,jdbcType=TIMESTAMP,javaType=java.util.Date},</if>
+            <if test="modifyTime != null">MODIFYTIME = #{modifyTime,jdbcType=TIMESTAMP,javaType=java.util.Date},</if>
+            <if test="status != null">STATUS = #{status,jdbcType=INTEGER},</if>
+            <if test="creater != null and creater != ''">CREATER = #{creater,jdbcType=VARCHAR},</if>
+            <if test="starLevel != null">STARLEVEL = #{starLevel,jdbcType=INTEGER},</if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateStatus" parameterType="hashmap">
+        update article set STATUS = #{status,jdbcType=INTEGER} where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+
+    <delete id="delete">
+        delete from article where
+                id in <foreach collection="list" item="item" open="(" close=")" separator=",">
+                            #{item,jdbcType=VARCHAR}
+                           </foreach>
+    </delete>
+
+	<select id="select" resultMap="ArticleMap" parameterType="hashmap">
+		<include refid="MySQLCommonMapper.pagingStart" />
+		select
+		<include refid="Column" />
+		from article t
+		<include refid="Where_Clause" />
+		<include refid="MySQLCommonMapper.sortInfo" />
+		<include refid="MySQLCommonMapper.pagingEnd" />
+	</select>
+
+	<select id="count" parameterType="hashmap" resultType="long">
+		select count(*) from article t
+		<include refid="Where_Clause" />
+	</select>
+
+    <select id="selectContent" resultMap="ArticleMap" parameterType="hashmap">
+        select
+        <include refid="Column" />,CONTENT
+        from article t <include refid="Where_Clause" />
+     </select>
+
+</mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CategoryMapper">
+
+    <resultMap id="CategoryMap" type="org.thorn.sailfish.entity.Category">
+        <id column="ENNAME" property="enName" jdbcType="VARCHAR" javaType="String"/>
+        <result column="CNNAME" property="cnName" jdbcType="VARCHAR" javaType="String"/>
+        <result column="PATH" property="path" jdbcType="VARCHAR" javaType="String"/>
+        <result column="SORT" property="sort" jdbcType="INTEGER" javaType="Integer"/>
+        <result column="HIDDEN" property="hidden" jdbcType="INTEGER" javaType="Integer"/>
+        <result column="PARENT" property="parent" jdbcType="VARCHAR" javaType="String"/>
+        <result column="ARTICLETEMPLATE" property="articleTemplate" jdbcType="VARCHAR" javaType="String"/>
+        <result column="INDEXTEMPLATE" property="indexTemplate" jdbcType="VARCHAR" javaType="String"/>
+    </resultMap>
+
+    <sql id="Column">
+            ENNAME,
+            CNNAME,
+            PATH,
+            SORT,
+            PARENT,
+            HIDDEN,
+            ARTICLETEMPLATE,
+            INDEXTEMPLATE
+	</sql>
+
+	<sql id="Where_Clause">
+		<where>
+            <if test="enName != null and enName != ''">
+                and t.ENNAME = #{enName,jdbcType=VARCHAR}
+            </if>
+            <if test="cnName != null and cnName != ''">
+                and t.CNNAME = #{cnName,jdbcType=VARCHAR}
+            </if>
+            <if test="path != null and path != ''">
+                and t.PATH = #{path,jdbcType=VARCHAR}
+            </if>
+            <if test="sort != null">
+                and t.SORT = #{sort,jdbcType=INTEGER}
+            </if>
+            <if test="hidden != null">
+                and t.HIDDEN = #{hidden,jdbcType=INTEGER}
+            </if>
+            <if test="parent != null and parent != ''">
+                and t.PARENT = #{parent,jdbcType=VARCHAR}
+            </if>
+            <if test="articleTemplate != null and articleTemplate != ''">
+                and t.ARTICLETEMPLATE = #{articleTemplate,jdbcType=VARCHAR}
+            </if>
+            <if test="indexTemplate != null and indexTemplate != ''">
+                and t.INDEXTEMPLATE = #{indexTemplate,jdbcType=VARCHAR}
+            </if>
+		</where>
+	</sql>
+
+    <insert id="insert" parameterType="org.thorn.sailfish.entity.Category">
+        insert into category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="enName != null and enName != ''">ENNAME,</if>
+            <if test="cnName != null and cnName != ''">CNNAME,</if>
+            <if test="path != null and path != ''">PATH,</if>
+            <if test="sort != null">SORT,</if>
+            <if test="hidden != null">HIDDEN,</if>
+            <if test="parent != null and parent != ''">PARENT,</if>
+            <if test="articleTemplate != null and articleTemplate != ''">ARTICLETEMPLATE,</if>
+            <if test="indexTemplate != null and indexTemplate != ''">INDEXTEMPLATE,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="enName != null and enName != ''">#{enName,jdbcType=VARCHAR},</if>
+            <if test="cnName != null and cnName != ''">#{cnName,jdbcType=VARCHAR},</if>
+            <if test="path != null and path != ''">#{path,jdbcType=VARCHAR},</if>
+            <if test="sort != null">#{sort,jdbcType=INTEGER},</if>
+            <if test="hidden != null">#{hidden,jdbcType=INTEGER},</if>
+            <if test="parent != null and parent != ''">#{parent,jdbcType=VARCHAR},</if>
+            <if test="articleTemplate != null and articleTemplate != ''">#{articleTemplate,jdbcType=VARCHAR},</if>
+            <if test="indexTemplate != null and indexTemplate != ''">#{indexTemplate,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="org.thorn.sailfish.entity.Category">
+        update category
+        <set>
+            <if test="cnName != null and cnName != ''">CNNAME = #{cnName,jdbcType=VARCHAR},</if>
+            <if test="path != null and path != ''">PATH = #{path,jdbcType=VARCHAR},</if>
+            <if test="sort != null">SORT = #{sort,jdbcType=INTEGER},</if>
+            <if test="hidden != null">HIDDEN = #{hidden,jdbcType=INTEGER},</if>
+            <if test="parent != null and parent != ''">PARENT = #{parent,jdbcType=VARCHAR},</if>
+            <if test="articleTemplate != null and articleTemplate != ''">ARTICLETEMPLATE = #{articleTemplate,jdbcType=VARCHAR},</if>
+            <if test="indexTemplate != null and indexTemplate != ''">INDEXTEMPLATE = #{indexTemplate,jdbcType=VARCHAR},</if>
+        </set>
+        where ENNAME = #{enName,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="delete">
+        delete from category where enName = #{enName,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectNoParent" resultType="String">
+        SELECT c.ENNAME FROM category c WHERE c.PARENT != #{root,jdbcType=VARCHAR} AND
+        NOT EXISTS ( SELECT c1.ENNAME FROM category c1 WHERE c1.ENNAME = c.PARENT )
+    </select>
+
+    <delete id="deleteNoParent" parameterType="hashmap">
+        delete from category where PARENT != #{root,jdbcType=VARCHAR} and ENNAME in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+    </delete>
+
+	<select id="select" resultMap="CategoryMap" parameterType="hashmap">
+		<include refid="MySQLCommonMapper.pagingStart" />
+		select
+		<include refid="Column" />
+		from category t
+		<include refid="Where_Clause" />
+		<include refid="MySQLCommonMapper.sortInfo" />
+		<include refid="MySQLCommonMapper.pagingEnd" />
+	</select>
+
+	<select id="count" parameterType="hashmap" resultType="long">
+		select count(*) from category t
+		<include refid="Where_Clause" />
+	</select>
+
+</mapper>
