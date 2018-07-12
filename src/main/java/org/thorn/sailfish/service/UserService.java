@@ -14,7 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 2014-3-13 16:03:33
  * @Version: 1.0
  */

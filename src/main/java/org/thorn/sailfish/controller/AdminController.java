@@ -7,7 +7,7 @@ import org.thorn.sailfish.core.Configuration;
 import javax.servlet.http.HttpSession;
 
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 13-10-15 下午3:57
  * @Version: 1.0
  */

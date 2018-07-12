@@ -16,7 +16,7 @@ import java.util.Map;
  *      <#list list as c></#list>
  *  </@category_list>
  *  列出栏目的下级可显示栏目
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 13-12-6 下午3:44
  * @Version: 1.0
  */

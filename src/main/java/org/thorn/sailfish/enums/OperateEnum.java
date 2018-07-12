@@ -1,7 +1,7 @@
 package org.thorn.sailfish.enums;
 
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 13-10-29 下午4:59
  * @Version: 1.0
  */

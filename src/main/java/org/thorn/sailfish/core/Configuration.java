@@ -5,7 +5,7 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 import java.io.File;
 
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 13-10-15 下午2:40
  * @Version: 1.0
  */

@@ -14,7 +14,7 @@ import java.util.Map;
  *  <@article id="">
  *      ${title}
  *  </@article>
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 13-12-16 上午11:15
  * @Version: 1.0
  */

@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.thorn.sailfish.enums.ArticleStatusEnum;
 
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 2013-11-21 10:12:23
  * @Version: 1.0
  */

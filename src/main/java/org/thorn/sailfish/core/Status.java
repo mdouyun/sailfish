@@ -1,7 +1,7 @@
 package org.thorn.sailfish.core;
 
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 13-10-14 下午6:18
  * @Version: 1.0
  */

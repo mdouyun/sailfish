@@ -3,7 +3,7 @@ package org.thorn.sailfish.utils;
 import javax.servlet.http.HttpSession;
 
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 13-10-16 下午5:54
  * @Version: 1.0
  */

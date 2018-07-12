@@ -6,7 +6,7 @@ import org.thorn.sailfish.enums.ArticleStatusEnum;
 import java.util.Date;
 
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 2013-11-21 10:12:23
  * @Version: 1.0
  */

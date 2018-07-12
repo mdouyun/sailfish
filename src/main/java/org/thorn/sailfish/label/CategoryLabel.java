@@ -14,7 +14,7 @@ import java.util.Map;
  *      ${enName}
  *  </@category>
  *  列出栏目信息
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 13-12-16 上午11:07
  * @Version: 1.0
  */

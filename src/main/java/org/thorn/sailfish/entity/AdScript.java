@@ -6,7 +6,7 @@ import org.thorn.sailfish.enums.YesOrNoEnum;
 import java.util.Date;
 
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 2013-12-17 13:59:49
  * @Version: 1.0
  */

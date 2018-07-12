@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 2013-10-30 13:58:11
  * @Version: 1.0
  */

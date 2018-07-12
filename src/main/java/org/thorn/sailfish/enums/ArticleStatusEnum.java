@@ -3,7 +3,7 @@ package org.thorn.sailfish.enums;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 13-11-20 上午9:55
  * @Version: 1.0
  */

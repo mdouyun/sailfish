@@ -3,7 +3,7 @@ package org.thorn.sailfish.entity;
 import java.util.Date;
 
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 2013-12-5 14:21:44
  * @Version: 1.0
  */
