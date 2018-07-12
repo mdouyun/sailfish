@@ -1,7 +1,7 @@
 package org.thorn.sailfish.kindeditor;
 
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 13-11-22 下午7:20
  * @Version: 1.0
  */

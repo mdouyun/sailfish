@@ -1,10 +1,3 @@
-/*
- * @(#)UserController  1.0 2014-03-13
- *
- * Copyright 2009 chinabank payment All Rights Reserved.
- * PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- * Author Email: yfchenyun@jd.com
- */
 package org.thorn.sailfish.controller;
 
 import org.apache.commons.lang.StringUtils;
@@ -23,7 +16,7 @@ import org.thorn.sailfish.service.UserService;
 /**
  * TODO.
  *
- * @author yfchenyun@jd.com, 2014-03-13.
+ * @author chen.chris, 2014-03-13.
  * @version 1.0
  * @since 1.0
  */

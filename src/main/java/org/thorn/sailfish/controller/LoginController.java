@@ -14,7 +14,7 @@ import org.thorn.sailfish.service.UserService;
 import javax.servlet.http.HttpSession;
 
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 13-10-15 上午10:12
  * @Version: 1.0
  */

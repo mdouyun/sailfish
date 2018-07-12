@@ -15,7 +15,7 @@ import org.thorn.sailfish.entity.AdScript;
 import org.thorn.sailfish.service.AdScriptService;
 
 /**
- * @Author: yfchenyun
+ * @Author: chen.chris
  * @Since: 13-12-17 下午1:51
  * @Version: 1.0
  */
